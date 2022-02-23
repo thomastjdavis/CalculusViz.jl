@@ -1,23 +1,52 @@
 <html>
 <head>
+<style>
+	* { margin:0; padding:0; }
+	html, body{
+		width:100%;
+		height:100%;
+	}
 	
+	canvas{
+		background: rgba(255,23,24,0.1);
+		display: block;
+	}
+</style>
 </head>
-<body>
+<body onLoad="ready()">
 <p>This is our canvas on which to make graphs</p>
-<canvas width="500" height="500" id="canvas" ></canvas>
+<canvas width="window.innerWidth" height="window.innerHeight" id="canvas" ></canvas>
 <script>
+
+	
 	var canvas = document.getElementById('canvas');
 	var c = canvas.getContext('2d');
 	
+	function resizeCanvas(){
+		canvas.width=window.innerWidth;
+		canvas.height=window.innerHeight;
+	}
+	function ready(){
+		resizeCanvas();
+		axes();
+		setDefault();
+		grid(25);
+		
+	}
 	
-	c.fillStyle='black';
+	/* 
+		need canvas and c defined already
+	*/
+	function axes(){
+	w = canvas.width;
+	h = canvas.height;
 	
-	//draws border
+	//draws borders
 	c.beginPath();
 	c.moveTo(0,0);
-	c.lineTo(500,0);
-	c.lineTo(500,500);
-	c.lineTo(0,500);
+	c.lineTo(w,0);
+	c.lineTo(w,h);
+	c.lineTo(0,h);
 	c.closePath();
 
 	c.closePath();
@@ -26,19 +55,82 @@
 	
 	//the y and x axis'
 	c.beginPath();
-	c.moveTo(250,25);
-	c.lineTo(250,475);
+	c.moveTo(w/2,h/20);
+	c.lineTo(w/2,h*19/20);
 	c.closePath();
 	c.lineWidth=2;
 	c.stroke();
 	
 	c.beginPath();
-	c.moveTo(25,250);
-	c.lineTo(475,250);
+	c.moveTo(w/20,h/2);
+	c.lineTo(w*19/20,h/2);
 	c.closePath();
 	c.lineWidth=2;
 	c.stroke();
 	
+	grid(20);
+	}
+	
+	function setDefault(){
+		c.scale(-1,-1);
+		c.save();
+	}
+	
+	function grid(delta){
+		//setDefault();
+		t = 0.5
+		d = Math.abs(delta)
+		nx = (w/2)/d
+		ny = (h/2)/d
+		
+
+		for(let i=1; i<nx; i++){
+			if ( i * d >= ((w/2)-d)) {
+				break;
+			}
+			c.beginPath();
+			c.moveTo((w/2)+d*i, h/2+d/2);
+			c.lineTo((w/2)+d*i, h/2-d/2);
+			c.closePath();
+			c.lineWidth=t;
+			c.stroke();
+			
+			c.beginPath();
+			c.moveTo((w/2)-d*i, h/2+d/2);
+			c.lineTo((w/2)-d*i, h/2-d/2);
+			c.closePath();
+			c.lineWidth=t;
+			c.stroke();
+		}
+		
+		for(let i=1; i<ny; i++){
+			if( i * d >= ((h/2)-d)){
+				break;
+			}
+			c.beginPath();
+			c.moveTo((w/2)+(d/2), h/2+d*i);
+			c.lineTo((w/2)-(d/2), h/2+d*i);
+			c.closePath();
+			c.lineWidth=t;
+			c.stroke();
+			
+			c.beginPath();
+			c.moveTo((w/2)+(d/2), h/2-(d*i));
+			c.lineTo((w/2)-(d/2), h/2-(d*i));
+			c.closePath();
+			c.lineWidth=t;
+			c.stroke();
+		}
+		//alert("check my work!");
+		
+	}
+	
+
+	
+	function graphLinear(scale){
+					
+	
+	}
 	</script>
 </body>
 </html>
