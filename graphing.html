@@ -1,0 +1,44 @@
+<html>
+<head>
+	
+</head>
+<body>
+<p>This is our canvas on which to make graphs</p>
+<canvas width="500" height="500" id="canvas" ></canvas>
+<script>
+	var canvas = document.getElementById('canvas');
+	var c = canvas.getContext('2d');
+	
+	
+	c.fillStyle='black';
+	
+	//draws border
+	c.beginPath();
+	c.moveTo(0,0);
+	c.lineTo(500,0);
+	c.lineTo(500,500);
+	c.lineTo(0,500);
+	c.closePath();
+
+	c.closePath();
+	c.lineWidth = 2;
+	c.stroke();
+	
+	//the y and x axis'
+	c.beginPath();
+	c.moveTo(250,25);
+	c.lineTo(250,475);
+	c.closePath();
+	c.lineWidth=2;
+	c.stroke();
+	
+	c.beginPath();
+	c.moveTo(25,250);
+	c.lineTo(475,250);
+	c.closePath();
+	c.lineWidth=2;
+	c.stroke();
+	
+	</script>
+</body>
+</html>
