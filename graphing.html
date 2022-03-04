@@ -14,23 +14,26 @@
 </style>
 </head>
 <body onLoad="ready()">
-<p>This is our canvas on which to make graphs</p>
-<canvas width="window.innerWidth" height="window.innerHeight" id="canvas" ></canvas>
+<p>This is our canvas to make graphs</p>
+<canvas width="400" height="400" id="canvas" ></canvas>
 <script>
 
 	
 	var canvas = document.getElementById('canvas');
 	var c = canvas.getContext('2d');
 	
-	function resizeCanvas(){
-		canvas.width=window.innerWidth;
-		canvas.height=window.innerHeight;
-	}
+	w = canvas.width;
+	h = canvas.height;
+	
+	const cursor = {
+		x: innerWidth/2,
+		y: innerHeight/2,
+	};
+	
 	function ready(){
-		resizeCanvas();
+		
 		axes();
-		setDefault();
-		grid(25);
+		c.translate(w/2,h/2);
 		
 	}
 	
@@ -38,8 +41,6 @@
 		need canvas and c defined already
 	*/
 	function axes(){
-	w = canvas.width;
-	h = canvas.height;
 	
 	//draws borders
 	c.beginPath();
@@ -71,13 +72,7 @@
 	grid(20);
 	}
 	
-	function setDefault(){
-		c.scale(-1,-1);
-		c.save();
-	}
-	
 	function grid(delta){
-		//setDefault();
 		t = 0.5
 		d = Math.abs(delta)
 		nx = (w/2)/d
@@ -121,16 +116,36 @@
 			c.lineWidth=t;
 			c.stroke();
 		}
+		c.closePath();
 		//alert("check my work!");
 		
 	}
 	
-
-	
-	function graphLinear(scale){
-					
-	
+	function giveStandard(x1,x2){
+		y1 = x1/(20);
+		y2 = x2/(20);
+		return "(" + y1 + ", " + (-y2) + ")";
 	}
+	
+
+	addEventListener("mousemove",(e)=> {
+		cursor.x = e.clientX;
+		cursor.y = e.clientY;
+		document.getElementById('coords').innerHTML = giveStandard(cursor.x-w/2,cursor.y-h/2);//"(" + (cursor.x-w/2) + ", " + (cursor.y-h/2) + ")";
+	});
+	
+	
+	addEventListener(
+		"touchmove",
+		(e) => {
+			e.preventDefault();
+			cursor.x = e.touches[0].clientX;
+			cursor.y = e.touches[0].clientY;
+			document.getElementById('coords').innerHTML = giveStandard(cursor.x-w/2,cursor.y-h/2);
+		},
+		{ passive:false }
+	);
 	</script>
+	<p id="coords">loading...</p>
 </body>
 </html>
