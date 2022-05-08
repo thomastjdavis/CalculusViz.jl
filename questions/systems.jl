@@ -38,3 +38,15 @@ function system(n::Int)
     end
 
 end
+
+    function getSystem(n)
+    question = system(n)
+    elements = 
+    """
+    <h2>$(n)x$(n)</h2>
+    <ul>
+    $(["<li>$(equation)</li>" for equation in question]...)
+    </ul>
+    <form></form>
+    """
+end
