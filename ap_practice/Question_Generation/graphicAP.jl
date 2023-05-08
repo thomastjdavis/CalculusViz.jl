@@ -1,5 +1,3 @@
-#module GraphicReasoning
-
 using Calculus, Plots
 
 
@@ -31,11 +29,8 @@ end
 
 #integral is line(b)*(b-a)
 function line(a::Int,fa,b::Int)
-	y = range(-5,5,length=11)
 	fb = makeLineEnd(fa)
-	
 	m = (fb-fa)/(b-a)
-
 	x -> m*(x-a)+fa
 end
 
@@ -132,7 +127,3 @@ function plotQuestion(pictureName="question.png")
 	)
 	savefig(pictureName)
 end
-
-#end
-
-
